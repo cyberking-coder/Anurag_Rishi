@@ -42,25 +42,6 @@
   })(0);
 })();
 
-/* ---------- galaxy woven through the figure's body ---------- */
-(function bodyStars() {
-  const g = document.getElementById("bodyStars");
-  if (!g) return;
-  const NS = "http://www.w3.org/2000/svg";
-  for (let i = 0; i < 90; i++) {
-    const s = document.createElementNS(NS, "circle");
-    // scatter across the silhouette's bounding region; bodyClip crops the rest
-    s.setAttribute("cx", 180 + Math.random() * 640);
-    s.setAttribute("cy", 180 + Math.random() * 700);
-    s.setAttribute("r", (Math.random() * 2.4 + 0.6).toFixed(2));
-    s.setAttribute("fill", Math.random() < 0.25 ? "#ff7ee3" : "#ffffff");
-    s.setAttribute("opacity", (Math.random() * 0.7 + 0.3).toFixed(2));
-    s.setAttribute("class", "bodyStar");
-    s.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
-    g.appendChild(s);
-  }
-})();
-
 /* ---------- nav + progress bar ---------- */
 const nav = document.getElementById("nav");
 const progressBar = document.getElementById("progressBar");
@@ -127,13 +108,16 @@ function animateCounters() {
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
-  /* —— HERO: enter the mind ——
-     450vh scroll track, pinned. The sequence mirrors the reference:
+  /* —— HERO: awaken the chakras, then enter the mind ——
+     550vh scroll track, pinned. The sequence:
      1. headline drifts out, sky streaks dim
-     2. tunnel rings bloom around the head, white light grows behind it
-     3. camera dives into the rings on the head (~36x zoom)
-     4. pure white light — then it warms into the orange reality
-     5. reality dissolves, revealing the site                       */
+     2. the 7 chakras ignite one by one, root → crown, each with
+        its halo, spinning petals and Sanskrit label
+     3. the kundalini beam draws up the spine
+     4. tunnel rings bloom, white light grows, camera dives into
+        the third eye (~38x zoom)
+     5. pure white light warms into the orange reality, then
+        dissolves to reveal the site                              */
   const dive = gsap.timeline({
     scrollTrigger: {
       trigger: ".hero",
@@ -144,43 +128,60 @@ if (window.gsap && window.ScrollTrigger) {
   });
 
   dive
-    .to(".hero__title span", { yPercent: -70, opacity: 0, stagger: 0.06, ease: "power2.in", duration: 1.1 }, 0)
+    .to(".hero__title span", { yPercent: -70, opacity: 0, stagger: 0.06, ease: "power2.in", duration: 1.0 }, 0)
     .to(".hero__kicker, #scrollHint", { opacity: 0, duration: 0.6 }, 0)
-    .to(".streak", { opacity: 0, duration: 1.4 }, 0.4)
-    .to(".mountains", { opacity: 0, yPercent: 20, duration: 1.4 }, 0.6)
+    .to(".streak", { opacity: 0.25, duration: 1.4 }, 0.4);
 
-    /* tunnel blooms */
-    .to(".tunnel span", { opacity: 1, scale: 1, stagger: 0.18, ease: "power1.out", duration: 1.6 }, 0.7)
-    .to("#headGlow", { opacity: 1, scale: 1.25, duration: 2 }, 0.9)
-    .fromTo('[data-step="0"]', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7 }, 1.2)
-    .to('[data-step="0"]', { opacity: 0, scale: 1.4, duration: 0.6 }, 2.0)
+  /* chakra ignition, root → crown */
+  const chakras = gsap.utils.toArray(".chakra"); // markup order = ignition order
+  chakras.forEach((ch, i) => {
+    const t = 0.7 + i * 0.55;
+    dive
+      .to(ch.querySelector(".ch-halo"), { opacity: 0.95, scale: 1, duration: 0.4, ease: "back.out(2)" }, t)
+      .to(ch.querySelector(".ch-ring"), { opacity: 1, duration: 0.35 }, t)
+      .to(ch.querySelector(".ch-core"), { opacity: 1, duration: 0.35 }, t)
+      .to(ch.querySelector(".ch-petal"), { opacity: 0.9, duration: 0.4 }, t + 0.08)
+      .to(ch.querySelector(".ch-label"), { opacity: 1, duration: 0.3 }, t + 0.1);
+  });
 
-    /* the dive — origin locked on the head's ring centre */
+  dive
+    /* kundalini rises */
+    .to(".spine", { strokeDashoffset: 0, ease: "none", duration: 1.1 }, 4.6)
+    .fromTo('[data-step="0"]', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7 }, 4.7)
+    .to('[data-step="0"]', { opacity: 0, scale: 1.4, duration: 0.6 }, 5.6)
+
+    /* tunnel blooms around the awakened mind */
+    .to(".mountains", { opacity: 0, yPercent: 20, duration: 1.2 }, 5.4)
+    .to(".tunnel span", { opacity: 1, scale: 1, stagger: 0.16, ease: "power1.out", duration: 1.5 }, 5.6)
+    .to("#headGlow", { opacity: 1, scale: 1.25, duration: 1.8 }, 5.8)
+    .to(".ch-label", { opacity: 0, duration: 0.5 }, 6.2)
+
+    /* the dive — origin locked on the third eye */
     .to(".meditator", {
-      scale: 36,
-      transformOrigin: "50% 39.8%",
+      scale: 38,
+      transformOrigin: "50% 23.5%",
       ease: "power2.in",
-      duration: 4.6,
-    }, 1.6)
-    .to(".tunnel span", { scale: 3.2, opacity: 0, stagger: 0.1, ease: "power2.in", duration: 2.4 }, 2.2)
-    .fromTo('[data-step="1"]', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7 }, 2.6)
-    .to('[data-step="1"]', { opacity: 0, scale: 1.4, duration: 0.6 }, 3.5)
+      duration: 4.4,
+    }, 6.4)
+    .to(".tunnel span", { scale: 3.2, opacity: 0, stagger: 0.1, ease: "power2.in", duration: 2.2 }, 7.0)
+    .fromTo('[data-step="1"]', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7 }, 7.3)
+    .to('[data-step="1"]', { opacity: 0, scale: 1.4, duration: 0.6 }, 8.2)
 
     /* whiteout */
-    .to("#heroPortal", { opacity: 1, ease: "power1.in", duration: 1.8 }, 3.8)
-    .to("#heroFigure", { opacity: 0, duration: 0.8 }, 5.2)
+    .to("#heroPortal", { opacity: 1, ease: "power1.in", duration: 1.7 }, 8.5)
+    .to("#heroFigure", { opacity: 0, duration: 0.8 }, 9.8)
 
     /* the orange reality */
-    .to("#heroReality", { opacity: 1, duration: 1.6 }, 5.4)
-    .to("#heroPortal", { opacity: 0, duration: 1.2 }, 5.9)
-    .fromTo('[data-step="2"]', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.9 }, 5.8)
-    .to('[data-step="2"]', { opacity: 0, scale: 1.25, duration: 0.7 }, 7.2)
-    .to("#heroReality", { opacity: 0, ease: "power2.out", duration: 1.4 }, 7.4);
+    .to("#heroReality", { opacity: 1, duration: 1.5 }, 10.0)
+    .to("#heroPortal", { opacity: 0, duration: 1.1 }, 10.5)
+    .fromTo('[data-step="2"]', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.9 }, 10.4)
+    .to('[data-step="2"]', { opacity: 0, scale: 1.25, duration: 0.7 }, 11.8)
+    .to("#heroReality", { opacity: 0, ease: "power2.out", duration: 1.3 }, 12.0);
 
   /* intro: headline rises on load */
   gsap.from(".hero__title span", { y: 90, opacity: 0, stagger: 0.15, duration: 1.3, ease: "power3.out", delay: 0.3 });
   gsap.from(".hero__kicker", { opacity: 0, y: 24, duration: 1.1, delay: 1 });
-  gsap.from(".meditator", { y: 120, opacity: 0, duration: 1.6, ease: "power3.out", delay: 0.2 });
+  gsap.from(".meditator", { scale: 0.9, opacity: 0, duration: 1.6, ease: "power3.out", delay: 0.2 });
 
   /* —— generic reveals —— */
   gsap.utils.toArray(".reveal").forEach((el) => {

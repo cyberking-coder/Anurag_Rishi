@@ -111,7 +111,7 @@ body{
 @media (max-width:1100px){.rail{display:none}}
 
 /* ════════ HERO ════════ */
-.hero{position:relative;height:450vh;z-index:1}
+.hero{position:relative;height:550vh;z-index:1}
 .hero__sticky{
   position:sticky;top:0;height:100vh;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
@@ -143,7 +143,7 @@ body{
 /* tunnel of rings */
 .tunnel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .tunnel span{
-  position:absolute;left:50%;top:44%;
+  position:absolute;left:50%;top:30%;
   border-radius:50%;opacity:0;
   transform:translate(-50%,-50%) scale(.55);
   border:12px solid rgba(207,92,255,.55);
@@ -158,25 +158,38 @@ body{
 
 /* the figure */
 .hero__figure{
-  position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 }
 .hero__glow{
-  position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
+  position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);
   width:60vmin;height:60vmin;border-radius:50%;opacity:0;
   background:radial-gradient(circle, #ffffff 0%, #ffe9fb 30%, rgba(255,126,227,.6) 55%, transparent 75%);
   filter:blur(6px);
 }
 .meditator{
-  position:relative;width:min(78vh,92vw);height:auto;overflow:visible;
-  margin-bottom:-4vh;will-change:transform;
+  position:relative;width:min(82vh,94vw);height:auto;overflow:visible;
+  will-change:transform;
 }
-.bodyStar{animation:starTwinkle 3.4s ease-in-out infinite}
-@keyframes starTwinkle{0%,100%{opacity:.9}50%{opacity:.25}}
+
+/* ── chakras : dormant until the scroll awakens them ── */
+.chakra .ch-halo{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:center}
+.chakra .ch-ring{opacity:.28}
+.chakra .ch-core{opacity:.15}
+.chakra .ch-petal{
+  opacity:0;transform-box:fill-box;transform-origin:center;
+  animation:petalSpin 14s linear infinite;
+}
+@keyframes petalSpin{to{transform:rotate(360deg)}}
+.chakra .ch-label{
+  font-family:var(--mono);font-size:25px;letter-spacing:3px;
+  fill:#fff;opacity:0;
+  text-shadow:0 0 14px rgba(255,126,227,.8);
+}
 
 /* light portal → orange reality */
 .hero__portal{
   position:absolute;inset:0;opacity:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 44%, #ffffff 0%, #fff3e0 22%, var(--pink) 48%, var(--violet) 70%, var(--bg) 95%);
+  background:radial-gradient(circle at 50% 30%, #ffffff 0%, #fff3e0 22%, var(--pink) 48%, var(--violet) 70%, var(--bg) 95%);
 }
 .hero__reality{
   position:absolute;inset:0;opacity:0;pointer-events:none;
