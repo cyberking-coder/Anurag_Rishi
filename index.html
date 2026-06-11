@@ -67,59 +67,107 @@
       <span></span><span></span><span></span>
     </div>
 
-    <!-- the figure we zoom into -->
+    <!-- the figure we zoom into : white-outline meditator with 7 chakras -->
     <div class="hero__figure" id="heroFigure">
       <div class="hero__glow" id="headGlow"></div>
-      <svg viewBox="0 0 1000 900" class="meditator" aria-hidden="true">
+      <svg viewBox="0 0 1000 1000" class="meditator" aria-hidden="true">
         <defs>
-          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1c0533"/>
-            <stop offset="100%" stop-color="#070112"/>
-          </linearGradient>
-          <linearGradient id="rimGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#ffd1f4"/>
-            <stop offset="45%" stop-color="#e44fd4" stop-opacity=".55"/>
-            <stop offset="100%" stop-color="#e44fd4" stop-opacity="0"/>
-          </linearGradient>
-          <radialGradient id="ringFade" cx="50%" cy="50%" r="50%">
-            <stop offset="60%" stop-color="#cf5cff"/>
-            <stop offset="100%" stop-color="#7b2fbe"/>
-          </radialGradient>
-          <filter id="ringGlow" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="6" result="b"/>
+          <filter id="glowS" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4" result="b"/>
             <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          <clipPath id="headClip">
-            <ellipse cx="500" cy="345" rx="158" ry="192"/>
-          </clipPath>
-          <clipPath id="bodyClip">
-            <ellipse cx="500" cy="345" rx="160" ry="195"/>
-            <path d="M120 900 C150 690 300 565 385 522 C425 502 462 494 500 494 C538 494 575 502 615 522 C700 565 850 690 880 900 Z"/>
-          </clipPath>
+          <filter id="glowL" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="12" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="spineGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%"  stop-color="#ff5757"/>
+            <stop offset="18%" stop-color="#ff9f43"/>
+            <stop offset="35%" stop-color="#ffd93d"/>
+            <stop offset="52%" stop-color="#4cd984"/>
+            <stop offset="68%" stop-color="#4cc3ff"/>
+            <stop offset="84%" stop-color="#6a5cff"/>
+            <stop offset="100%" stop-color="#c77dff"/>
+          </linearGradient>
+          <radialGradient id="haloRoot"  cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#ff5757"/><stop offset="100%" stop-color="#ff5757" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloSacral" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#ff9f43"/><stop offset="100%" stop-color="#ff9f43" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloSolar" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#ffd93d"/><stop offset="100%" stop-color="#ffd93d" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloHeart" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#4cd984"/><stop offset="100%" stop-color="#4cd984" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloThroat" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#4cc3ff"/><stop offset="100%" stop-color="#4cc3ff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloEye"   cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#6a5cff"/><stop offset="100%" stop-color="#6a5cff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloCrown" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#c77dff"/><stop offset="100%" stop-color="#c77dff" stop-opacity="0"/></radialGradient>
         </defs>
 
-        <!-- silhouette : torso + ears + head -->
-        <path fill="url(#bodyGrad)" d="M120 900 C150 690 300 565 385 522 C425 502 462 494 500 494 C538 494 575 502 615 522 C700 565 850 690 880 900 Z"/>
-        <ellipse cx="338" cy="385" rx="24" ry="44" fill="url(#bodyGrad)"/>
-        <ellipse cx="662" cy="385" rx="24" ry="44" fill="url(#bodyGrad)"/>
-        <ellipse cx="500" cy="345" rx="160" ry="195" fill="url(#bodyGrad)"/>
+        <!-- soft violet aura copy behind the outline -->
+        <path class="aura-line" d="M500 118 C568 118 610 172 608 240 C607 286 588 318 562 338 C588 352 642 368 688 392 C732 415 750 462 746 512 C743 550 752 590 772 628 C790 662 812 692 826 716 C842 744 856 770 850 792 C838 824 790 842 742 850 C660 864 560 870 500 870 C440 870 340 864 258 850 C210 842 162 824 150 792 C144 770 158 744 174 716 C188 692 210 662 228 628 C248 590 257 550 254 512 C250 462 268 415 312 392 C358 368 412 352 438 338 C412 318 393 286 392 240 C390 172 432 118 500 118 Z"
+          fill="none" stroke="#b9aaff" stroke-width="16" opacity=".3" filter="url(#glowL)" stroke-linejoin="round"/>
 
-        <!-- starfield woven through the body (populated by JS) -->
-        <g id="bodyStars" clip-path="url(#bodyClip)"></g>
+        <!-- the white-outline silhouette (black fill occludes the sky) -->
+        <path class="body-line" d="M500 118 C568 118 610 172 608 240 C607 286 588 318 562 338 C588 352 642 368 688 392 C732 415 750 462 746 512 C743 550 752 590 772 628 C790 662 812 692 826 716 C842 744 856 770 850 792 C838 824 790 842 742 850 C660 864 560 870 500 870 C440 870 340 864 258 850 C210 842 162 824 150 792 C144 770 158 744 174 716 C188 692 210 662 228 628 C248 590 257 550 254 512 C250 462 268 415 312 392 C358 368 412 352 438 338 C412 318 393 286 392 240 C390 172 432 118 500 118 Z"
+          fill="#050010" stroke="#ffffff" stroke-width="7" filter="url(#glowS)" stroke-linejoin="round"/>
 
-        <!-- hypnotic rings painted on the head -->
-        <g clip-path="url(#headClip)" filter="url(#ringGlow)" stroke="url(#ringFade)" fill="none">
-          <circle cx="500" cy="358" r="150" stroke-width="7"/>
-          <circle cx="500" cy="358" r="122" stroke-width="7"/>
-          <circle cx="500" cy="358" r="95"  stroke-width="7"/>
-          <circle cx="500" cy="358" r="69"  stroke-width="7"/>
-          <circle cx="500" cy="358" r="45"  stroke-width="7"/>
-          <circle cx="500" cy="358" r="24"  stroke-width="7"/>
-          <circle cx="500" cy="358" r="8" fill="#e9b3ff" stroke="none"/>
+        <!-- inner contour lines : arms against torso + folded legs -->
+        <g fill="none" stroke="#ffffff" stroke-width="4" opacity=".8" filter="url(#glowS)" stroke-linecap="round">
+          <path d="M650 400 C668 470 690 560 745 660 C755 680 770 700 780 712"/>
+          <path d="M350 400 C332 470 310 560 255 660 C245 680 230 700 220 712"/>
+          <path d="M380 792 C430 762 570 762 620 792"/>
         </g>
 
-        <!-- rim light -->
-        <ellipse cx="500" cy="345" rx="160" ry="195" fill="none" stroke="url(#rimGrad)" stroke-width="4"/>
+        <!-- kundalini beam drawn up the spine -->
+        <line class="spine" x1="500" y1="766" x2="500" y2="92"
+          stroke="url(#spineGrad)" stroke-width="5" filter="url(#glowS)"
+          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity=".9"/>
+
+        <!-- the 7 chakras, root → crown (ignition order) -->
+        <g class="chakra" data-name="root" transform="translate(500,766)">
+          <circle class="ch-halo" r="48" fill="url(#haloRoot)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#ff5757" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#ff5757" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="88" y="7">MULADHARA · ROOT</text>
+        </g>
+        <g class="chakra" data-name="sacral" transform="translate(500,672)">
+          <circle class="ch-halo" r="48" fill="url(#haloSacral)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#ff9f43" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#ff9f43" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="-88" y="7" text-anchor="end">SVADHISHTHANA · SACRAL</text>
+        </g>
+        <g class="chakra" data-name="solar" transform="translate(500,578)">
+          <circle class="ch-halo" r="48" fill="url(#haloSolar)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#ffd93d" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#ffd93d" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="88" y="7">MANIPURA · SOLAR PLEXUS</text>
+        </g>
+        <g class="chakra" data-name="heart" transform="translate(500,480)">
+          <circle class="ch-halo" r="48" fill="url(#haloHeart)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#4cd984" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#4cd984" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="-88" y="7" text-anchor="end">ANAHATA · HEART</text>
+        </g>
+        <g class="chakra" data-name="throat" transform="translate(500,380)">
+          <circle class="ch-halo" r="48" fill="url(#haloThroat)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#4cc3ff" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#4cc3ff" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="88" y="7">VISHUDDHA · THROAT</text>
+        </g>
+        <g class="chakra" data-name="thirdeye" transform="translate(500,235)">
+          <circle class="ch-halo" r="48" fill="url(#haloEye)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#6a5cff" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#6a5cff" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="-88" y="7" text-anchor="end">AJNA · THIRD EYE</text>
+        </g>
+        <g class="chakra" data-name="crown" transform="translate(500,92)">
+          <circle class="ch-halo" r="48" fill="url(#haloCrown)"/>
+          <circle class="ch-petal" r="34" fill="none" stroke="#c77dff" stroke-width="2.5" stroke-dasharray="7 11"/>
+          <circle class="ch-ring" r="24" fill="rgba(5,0,16,.55)" stroke="#c77dff" stroke-width="4.5"/>
+          <circle class="ch-core" r="9" fill="#fff"/>
+          <text class="ch-label" x="88" y="7">SAHASRARA · CROWN</text>
+        </g>
       </svg>
     </div>
 
