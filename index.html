@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>InnerLight — Meditation & Healing of the Soul</title>
+<meta name="description" content="InnerLight — a sanctuary for meditation, mindfulness and healing of the soul. Look deeper within." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🪷</text></svg>" />
+</head>
+<body>
+
+<!-- ambient particle canvas -->
+<canvas id="stars"></canvas>
+
+<!-- progress bar -->
+<div class="progress"><span id="progressBar"></span></div>
+
+<!-- ════════ NAV ════════ -->
+<nav class="nav" id="nav">
+  <a class="nav__logo" href="#top">Inner<span>Light</span></a>
+  <div class="nav__links">
+    <a href="#sanctuary">Sanctuary</a>
+    <a href="#practices">Practices</a>
+    <a href="#journey">Journey</a>
+    <a href="#breathe">Breathe</a>
+    <a href="#voices">Voices</a>
+  </div>
+  <a class="nav__cta" href="#begin">Begin Healing</a>
+</nav>
+
+<!-- ════════ HERO : look deeper into the mind ════════ -->
+<header class="hero" id="top">
+  <div class="hero__sticky">
+
+    <!-- the figure we zoom into -->
+    <div class="hero__figure" id="heroFigure">
+      <svg viewBox="0 0 800 800" class="meditator" aria-hidden="true">
+        <defs>
+          <radialGradient id="auraGrad" cx="50%" cy="26%" r="60%">
+            <stop offset="0%" stop-color="#ffd9a0" stop-opacity="0.9"/>
+            <stop offset="30%" stop-color="#b388ff" stop-opacity="0.35"/>
+            <stop offset="70%" stop-color="#3d2e8c" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#0b0a1a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c9a8ff"/>
+            <stop offset="55%" stop-color="#7e6cff"/>
+            <stop offset="100%" stop-color="#3b2f7a"/>
+          </linearGradient>
+          <radialGradient id="eyeGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff7e6"/>
+            <stop offset="35%" stop-color="#ffc97d"/>
+            <stop offset="100%" stop-color="#ffc97d" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="8"/>
+          </filter>
+        </defs>
+
+        <!-- aura -->
+        <circle cx="400" cy="320" r="330" fill="url(#auraGrad)" class="aura"/>
+
+        <!-- expanding mind ripples -->
+        <g class="ripples" fill="none" stroke="#e8d9ff" stroke-width="1.2">
+          <circle class="ripple" cx="400" cy="196" r="40"/>
+          <circle class="ripple" cx="400" cy="196" r="80"/>
+          <circle class="ripple" cx="400" cy="196" r="130"/>
+          <circle class="ripple" cx="400" cy="196" r="190"/>
+        </g>
+
+        <!-- silhouette: glow copy -->
+        <g filter="url(#soft)" opacity="0.85">
+          <circle cx="400" cy="208" r="64" fill="url(#bodyGrad)"/>
+          <path fill="url(#bodyGrad)" d="M400 288
+            C 345 292 312 326 300 384
+            C 292 424 300 462 282 500
+            C 238 516 210 543 210 572
+            C 210 604 262 620 330 622
+            L 470 622
+            C 538 620 590 604 590 572
+            C 590 543 562 516 518 500
+            C 500 462 508 424 500 384
+            C 488 326 455 292 400 288 Z"/>
+        </g>
+        <!-- silhouette: crisp copy -->
+        <circle cx="400" cy="208" r="64" fill="url(#bodyGrad)"/>
+        <path fill="url(#bodyGrad)" d="M400 288
+          C 345 292 312 326 300 384
+          C 292 424 300 462 282 500
+          C 238 516 210 543 210 572
+          C 210 604 262 620 330 622
+          L 470 622
+          C 538 620 590 604 590 572
+          C 590 543 562 516 518 500
+          C 500 462 508 424 500 384
+          C 488 326 455 292 400 288 Z"/>
+
+        <!-- third eye — the doorway -->
+        <circle class="thirdEyeHalo" cx="400" cy="196" r="34" fill="url(#eyeGrad)"/>
+        <circle class="thirdEye" cx="400" cy="196" r="7" fill="#fff4dd"/>
+      </svg>
+    </div>
+
+    <!-- the light portal that swallows the screen -->
+    <div class="hero__portal" id="heroPortal"></div>
+
+    <!-- headline -->
+    <div class="hero__text" id="heroText">
+      <p class="hero__kicker">a sanctuary for the soul</p>
+      <h1 class="hero__title"><span>Look</span> <span>Deeper</span> <span>Within</span></h1>
+      <p class="hero__sub">Beyond thought, beneath the noise — a quiet light is waiting.</p>
+    </div>
+
+    <!-- words revealed as you travel inward -->
+    <div class="hero__inner-words">
+      <p class="inner-word" data-step="0">quiet the mind…</p>
+      <p class="inner-word" data-step="1">soften the heart…</p>
+      <p class="inner-word" data-step="2">and step into the light.</p>
+    </div>
+
+    <div class="hero__scrollhint" id="scrollHint">
+      <span>scroll to enter the mind</span>
+      <i></i>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ SANCTUARY ════════ -->
+<section class="sanctuary" id="sanctuary">
+  <div class="wrap">
+    <p class="eyebrow reveal">welcome home</p>
+    <h2 class="display reveal">You were never broken.<br/><em>You were waiting to be heard.</em></h2>
+    <p class="lead reveal">
+      InnerLight is a space where ancient stillness meets modern life. Through meditation,
+      breathwork and sound, we guide you back to the calm that has always lived inside you —
+      gently healing the soul, one breath at a time.
+    </p>
+    <div class="stats reveal">
+      <div class="stat"><strong data-count="12000">0</strong><span>souls guided</span></div>
+      <div class="stat"><strong data-count="48">0</strong><span>healing journeys</span></div>
+      <div class="stat"><strong data-count="320">0</strong><span>guided meditations</span></div>
+      <div class="stat"><strong data-count="98">0</strong><span>% feel lighter</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FLOATING QUOTE ════════ -->
+<section class="quote-band">
+  <h3 class="quote-band__text">“Quiet the mind, and the soul will speak.” — Ma Jaya</h3>
+</section>
+
+<!-- ════════ PRACTICES ════════ -->
+<section class="practices" id="practices">
+  <div class="wrap">
+    <p class="eyebrow reveal">the practices</p>
+    <h2 class="display reveal">Four paths, <em>one stillness</em></h2>
+    <div class="cards">
+      <article class="card reveal">
+        <div class="card__glow"></div>
+        <span class="card__icon">🌬️</span>
+        <h3>Mindful Breathing</h3>
+        <p>Anchor yourself in the rhythm of the breath. Slow, conscious breathing calms the nervous system and dissolves anxiety in minutes.</p>
+        <span class="card__tag">begin here</span>
+      </article>
+      <article class="card reveal">
+        <div class="card__glow"></div>
+        <span class="card__icon">🧘</span>
+        <h3>Guided Meditation</h3>
+        <p>Voice-led journeys inward — body scans, loving-kindness and deep visualisation that quiet the restless mind and open the heart.</p>
+        <span class="card__tag">daily ritual</span>
+      </article>
+      <article class="card reveal">
+        <div class="card__glow"></div>
+        <span class="card__icon">🎵</span>
+        <h3>Sound Healing</h3>
+        <p>Tibetan bowls, chimes and binaural frequencies wash through the body, releasing tension stored far beneath the surface.</p>
+        <span class="card__tag">deep release</span>
+      </article>
+      <article class="card reveal">
+        <div class="card__glow"></div>
+        <span class="card__icon">🕉️</span>
+        <h3>Chakra Balancing</h3>
+        <p>Realign the seven centres of energy. When the inner rivers flow freely, the soul remembers its own radiance.</p>
+        <span class="card__tag">restore flow</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ JOURNEY ════════ -->
+<section class="journey" id="journey">
+  <div class="wrap">
+    <p class="eyebrow reveal">the healing journey</p>
+    <h2 class="display reveal">How the soul <em>comes home</em></h2>
+    <div class="timeline">
+      <div class="timeline__line"><span id="timelineFill"></span></div>
+      <div class="step reveal">
+        <span class="step__num">01</span>
+        <h3>Arrive</h3>
+        <p>Put the world down. In your first sitting you simply arrive — no goals, no fixing, just the radical act of being still.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step__num">02</span>
+        <h3>Listen</h3>
+        <p>Beneath the noise, the body speaks. We learn to listen to tension, emotion and memory with kindness instead of judgement.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step__num">03</span>
+        <h3>Release</h3>
+        <p>Through breath and sound, what was held is finally let go. Old grief leaves the body the same way it came in — in waves.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step__num">04</span>
+        <h3>Illuminate</h3>
+        <p>What remains when the weight is gone? Light. Clarity. A soul at ease — carrying its calm into everyday life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ BREATHE — interactive ════════ -->
+<section class="breathe" id="breathe">
+  <div class="wrap breathe__wrap">
+    <div class="breathe__copy">
+      <p class="eyebrow reveal">try it now</p>
+      <h2 class="display reveal">One minute of <em>pure presence</em></h2>
+      <p class="lead reveal">Follow the circle. Inhale as it blooms, hold at the top, exhale as it softens. Three rounds is all it takes to change the weather of your mind.</p>
+    </div>
+    <div class="breathe__stage reveal">
+      <div class="breathe__rings">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="breathe__circle" id="breatheCircle">
+        <span id="breatheLabel">breathe in</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VOICES ════════ -->
+<section class="voices" id="voices">
+  <div class="wrap">
+    <p class="eyebrow reveal">voices of healing</p>
+    <h2 class="display reveal">What souls are <em>saying</em></h2>
+    <div class="testimonials">
+      <figure class="testimonial reveal">
+        <blockquote>“I came carrying ten years of grief. After eight weeks of guided meditation I finally slept through the night — and woke up feeling like myself again.”</blockquote>
+        <figcaption><span class="avatar">A</span> Ananya · Mumbai</figcaption>
+      </figure>
+      <figure class="testimonial reveal">
+        <blockquote>“The sound healing sessions are unlike anything I've experienced. It felt like the bowls were untying knots I didn't know I had.”</blockquote>
+        <figcaption><span class="avatar">R</span> Rishi · Bengaluru</figcaption>
+      </figure>
+      <figure class="testimonial reveal">
+        <blockquote>“Five mindful minutes every morning rewired my entire day. My anxiety is quieter, my heart is louder.”</blockquote>
+        <figcaption><span class="avatar">S</span> Sara · London</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<section class="cta" id="begin">
+  <div class="cta__aura"></div>
+  <div class="wrap">
+    <h2 class="display reveal">The light you seek<br/><em>is already in you.</em></h2>
+    <p class="lead reveal">Begin your healing journey today — your first guided meditation is a gift.</p>
+    <a class="btn reveal" href="#top">Begin the Journey ✦</a>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <a class="nav__logo" href="#top">Inner<span>Light</span></a>
+      <p>Meditation & healing of the soul.<br/>Breathe in. Belong.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#sanctuary">Sanctuary</a>
+      <a href="#practices">Practices</a>
+      <a href="#journey">Journey</a>
+    </div>
+    <div>
+      <h4>Practice</h4>
+      <a href="#breathe">Breathe</a>
+      <a href="#voices">Voices</a>
+      <a href="#begin">Begin</a>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">Newsletter</a>
+    </div>
+  </div>
+  <p class="footer__note">© 2026 InnerLight · made with stillness 🪷</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
