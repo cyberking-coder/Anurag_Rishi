@@ -143,7 +143,7 @@ body{
 /* tunnel of rings */
 .tunnel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .tunnel span{
-  position:absolute;left:50%;top:23%;
+  position:absolute;left:50%;top:18%;
   border-radius:50%;opacity:0;
   transform:translate(-50%,-50%) scale(.55);
   border:12px solid rgba(207,92,255,.55);
@@ -161,15 +161,32 @@ body{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 }
 .hero__glow{
-  position:absolute;left:50%;top:23%;transform:translate(-50%,-50%);
+  position:absolute;left:50%;top:18%;transform:translate(-50%,-50%);
   width:60vmin;height:60vmin;border-radius:50%;opacity:0;
   background:radial-gradient(circle, #ffffff 0%, #ffe9fb 30%, rgba(255,126,227,.6) 55%, transparent 75%);
   filter:blur(6px);
 }
-.meditator{
-  position:relative;width:min(78vh,94vw);height:auto;overflow:visible;
+/* ── the model : real PNG cutout with the galaxy masked inside ── */
+.model{
+  position:relative;height:min(86vh,114vw);aspect-ratio:1122/1402;
   will-change:transform;
 }
+.model__img,.model__galaxy,.model__overlay,.model__field,.model__stars,.model__neb{
+  position:absolute;inset:0;width:100%;height:100%;
+}
+.model__img{object-fit:fill;filter:drop-shadow(0 0 18px rgba(255,255,255,.35))}
+.model__galaxy{
+  -webkit-mask-image:url(model.png);mask-image:url(model.png);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  mix-blend-mode:screen;
+}
+.model__field{object-fit:cover;opacity:.6}
+.model__neb{background:
+  radial-gradient(ellipse 60% 45% at 40% 45%, rgba(123,47,190,.6), transparent 70%),
+  radial-gradient(ellipse 55% 40% at 64% 70%, rgba(228,79,212,.42), transparent 70%),
+  radial-gradient(ellipse 45% 35% at 50% 16%, rgba(76,195,255,.35), transparent 70%)}
+.model__overlay{overflow:visible}
 .bodyStar{animation:starTwinkle 3.6s ease-in-out infinite}
 @keyframes starTwinkle{0%,100%{opacity:1}50%{opacity:.2}}
 
@@ -212,7 +229,7 @@ body{
 /* light portal → orange reality */
 .hero__portal{
   position:absolute;inset:0;opacity:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 23%, #ffffff 0%, #fff3e0 22%, var(--pink) 48%, var(--violet) 70%, var(--bg) 95%);
+  background:radial-gradient(circle at 50% 18%, #ffffff 0%, #fff3e0 22%, var(--pink) 48%, var(--violet) 70%, var(--bg) 95%);
 }
 .hero__reality{
   position:absolute;inset:0;opacity:0;pointer-events:none;

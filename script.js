@@ -54,10 +54,10 @@
 
   for (let i = 0; i < 460; i++) {
     const s = star("circle");
-    // scatter across the silhouette's bounds; bodyClip crops the rest
-    s.setAttribute("cx", (40 + Math.random() * 920).toFixed(1));
-    s.setAttribute("cy", (40 + Math.random() * 1030).toFixed(1));
-    s.setAttribute("r", (Math.random() * 1.9 + 0.5).toFixed(2));
+    // scatter across the model's box; the PNG alpha mask crops the rest
+    s.setAttribute("cx", (10 + Math.random() * 1100).toFixed(1));
+    s.setAttribute("cy", (10 + Math.random() * 1380).toFixed(1));
+    s.setAttribute("r", (Math.random() * 2.2 + 0.6).toFixed(2));
     const roll = Math.random();
     s.setAttribute("fill",
       roll < 0.35 ? "#ffffff" :
@@ -71,9 +71,9 @@
 
   /* bright stars with the classic 4-point cross spikes */
   for (let i = 0; i < 12; i++) {
-    const cx = 90 + Math.random() * 820;
-    const cy = 90 + Math.random() * 930;
-    const len = 9 + Math.random() * 14;
+    const cx = 80 + Math.random() * 960;
+    const cy = 80 + Math.random() * 1240;
+    const len = 10 + Math.random() * 15;
     const grp = star("g");
     grp.setAttribute("class", "bodyStar");
     grp.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
@@ -215,9 +215,9 @@ if (window.gsap && window.ScrollTrigger) {
     .to(".chakra-legend", { opacity: 0, duration: 0.5 }, 6.2)
 
     /* the dive — origin locked on the third eye */
-    .to(".meditator", {
+    .to("#modelBox", {
       scale: 38,
-      transformOrigin: "50% 18.6%",
+      transformOrigin: "50% 12.5%",
       ease: "power2.in",
       duration: 4.4,
     }, 6.4)
@@ -239,7 +239,7 @@ if (window.gsap && window.ScrollTrigger) {
   /* intro: headline rises on load */
   gsap.from(".hero__title span", { y: 90, opacity: 0, stagger: 0.15, duration: 1.3, ease: "power3.out", delay: 0.3 });
   gsap.from(".hero__kicker", { opacity: 0, y: 24, duration: 1.1, delay: 1 });
-  gsap.from(".meditator", { scale: 0.9, opacity: 0, duration: 1.6, ease: "power3.out", delay: 0.2 });
+  gsap.from("#modelBox", { scale: 0.9, opacity: 0, duration: 1.6, ease: "power3.out", delay: 0.2 });
 
   /* —— generic reveals —— */
   gsap.utils.toArray(".reveal").forEach((el) => {
