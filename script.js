@@ -336,6 +336,19 @@ if (window.gsap && window.ScrollTrigger) {
     });
   });
 
+  /* each kriya scene rises into its panel, then keeps breathing */
+  gsap.utils.toArray(".kriya").forEach((scene) => {
+    gsap.from(scene, {
+      y: 90, opacity: 0, scale: 0.82, rotationX: 18,
+      duration: 1.3, ease: "power3.out",
+      scrollTrigger: { trigger: scene, start: "top 82%" },
+    });
+    gsap.from(scene.querySelectorAll(".fx"), {
+      opacity: 0, duration: 0.8, stagger: 0.15, delay: 0.5,
+      scrollTrigger: { trigger: scene, start: "top 82%" },
+    });
+  });
+
   /* checklist ticks pop in one by one */
   gsap.utils.toArray(".ticks").forEach((list) => {
     gsap.from(list.children, {
