@@ -42,23 +42,56 @@
   })(0);
 })();
 
-/* ---------- sea of galaxy inside the figure's body ---------- */
+/* ---------- sea of galaxy inside the figure's body ----------
+   palette matched to the Hubble deep-field reference:
+   warm whites, faint orange galaxies, blue-white foreground stars,
+   plus a handful of bright stars with diffraction spikes        */
 (function galaxy() {
   const g = document.getElementById("galaxyStars");
   if (!g) return;
   const NS = "http://www.w3.org/2000/svg";
-  for (let i = 0; i < 170; i++) {
-    const s = document.createElementNS(NS, "circle");
+  const star = (tag) => document.createElementNS(NS, tag);
+
+  for (let i = 0; i < 240; i++) {
+    const s = star("circle");
     // scatter across the silhouette's bounds; bodyClip crops the rest
     s.setAttribute("cx", (40 + Math.random() * 920).toFixed(1));
     s.setAttribute("cy", (40 + Math.random() * 1030).toFixed(1));
-    s.setAttribute("r", (Math.random() * 2.1 + 0.5).toFixed(2));
+    s.setAttribute("r", (Math.random() * 1.5 + 0.4).toFixed(2));
     const roll = Math.random();
-    s.setAttribute("fill", roll < 0.6 ? "#ffffff" : roll < 0.8 ? "#ffb8ef" : "#9fd8ff");
-    s.setAttribute("opacity", (Math.random() * 0.65 + 0.35).toFixed(2));
+    s.setAttribute("fill", roll < 0.5 ? "#ffffff" : roll < 0.8 ? "#ffd9b0" : "#bcd8ff");
+    s.setAttribute("opacity", (Math.random() * 0.65 + 0.3).toFixed(2));
     s.setAttribute("class", "bodyStar");
     s.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
     g.appendChild(s);
+  }
+
+  /* bright stars with the classic 4-point cross spikes */
+  for (let i = 0; i < 9; i++) {
+    const cx = 90 + Math.random() * 820;
+    const cy = 90 + Math.random() * 930;
+    const len = 9 + Math.random() * 13;
+    const grp = star("g");
+    grp.setAttribute("class", "bodyStar");
+    grp.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
+    const core = star("circle");
+    core.setAttribute("cx", cx); core.setAttribute("cy", cy);
+    core.setAttribute("r", (2 + Math.random() * 1.6).toFixed(2));
+    core.setAttribute("fill", "#ffffff");
+    const v = star("line");
+    v.setAttribute("x1", cx); v.setAttribute("x2", cx);
+    v.setAttribute("y1", cy - len); v.setAttribute("y2", cy + len);
+    const h = star("line");
+    h.setAttribute("y1", cy); h.setAttribute("y2", cy);
+    h.setAttribute("x1", cx - len); h.setAttribute("x2", cx + len);
+    for (const l of [v, h]) {
+      l.setAttribute("stroke", "#ffffff");
+      l.setAttribute("stroke-width", "1.1");
+      l.setAttribute("opacity", ".85");
+      l.setAttribute("stroke-linecap", "round");
+    }
+    grp.append(v, h, core);
+    g.appendChild(grp);
   }
 })();
 
