@@ -43,41 +43,44 @@
 })();
 
 /* ---------- sea of galaxy inside the figure's body ----------
-   palette matched to the Hubble deep-field reference:
-   warm whites, faint orange galaxies, blue-white foreground stars,
-   plus a handful of bright stars with diffraction spikes        */
+   dense violet star-sea matched to the reference body texture:
+   purple, blue-white and pink stars over a Hubble deep field,
+   plus bright stars with diffraction spikes                     */
 (function galaxy() {
   const g = document.getElementById("galaxyStars");
   if (!g) return;
   const NS = "http://www.w3.org/2000/svg";
   const star = (tag) => document.createElementNS(NS, tag);
 
-  for (let i = 0; i < 240; i++) {
+  for (let i = 0; i < 460; i++) {
     const s = star("circle");
-    // scatter across the silhouette's bounds; bodyClip crops the rest
-    s.setAttribute("cx", (40 + Math.random() * 920).toFixed(1));
-    s.setAttribute("cy", (40 + Math.random() * 1030).toFixed(1));
-    s.setAttribute("r", (Math.random() * 1.5 + 0.4).toFixed(2));
+    // scatter across the model's box; the PNG alpha mask crops the rest
+    s.setAttribute("cx", (10 + Math.random() * 1100).toFixed(1));
+    s.setAttribute("cy", (10 + Math.random() * 1380).toFixed(1));
+    s.setAttribute("r", (Math.random() * 2.2 + 0.6).toFixed(2));
     const roll = Math.random();
-    s.setAttribute("fill", roll < 0.5 ? "#ffffff" : roll < 0.8 ? "#ffd9b0" : "#bcd8ff");
-    s.setAttribute("opacity", (Math.random() * 0.65 + 0.3).toFixed(2));
+    s.setAttribute("fill",
+      roll < 0.35 ? "#ffffff" :
+      roll < 0.6  ? "#cf9fff" :
+      roll < 0.8  ? "#8fb8ff" : "#ff9fdc");
+    s.setAttribute("opacity", (Math.random() * 0.6 + 0.4).toFixed(2));
     s.setAttribute("class", "bodyStar");
     s.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
     g.appendChild(s);
   }
 
   /* bright stars with the classic 4-point cross spikes */
-  for (let i = 0; i < 9; i++) {
-    const cx = 90 + Math.random() * 820;
-    const cy = 90 + Math.random() * 930;
-    const len = 9 + Math.random() * 13;
+  for (let i = 0; i < 12; i++) {
+    const cx = 80 + Math.random() * 960;
+    const cy = 80 + Math.random() * 1240;
+    const len = 10 + Math.random() * 15;
     const grp = star("g");
     grp.setAttribute("class", "bodyStar");
     grp.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
     const core = star("circle");
     core.setAttribute("cx", cx); core.setAttribute("cy", cy);
-    core.setAttribute("r", (2 + Math.random() * 1.6).toFixed(2));
-    core.setAttribute("fill", "#ffffff");
+    core.setAttribute("r", (2.2 + Math.random() * 1.6).toFixed(2));
+    core.setAttribute("fill", Math.random() < 0.7 ? "#ffffff" : "#dcc3ff");
     const v = star("line");
     v.setAttribute("x1", cx); v.setAttribute("x2", cx);
     v.setAttribute("y1", cy - len); v.setAttribute("y2", cy + len);
@@ -86,8 +89,8 @@
     h.setAttribute("x1", cx - len); h.setAttribute("x2", cx + len);
     for (const l of [v, h]) {
       l.setAttribute("stroke", "#ffffff");
-      l.setAttribute("stroke-width", "1.1");
-      l.setAttribute("opacity", ".85");
+      l.setAttribute("stroke-width", "1.2");
+      l.setAttribute("opacity", ".9");
       l.setAttribute("stroke-linecap", "round");
     }
     grp.append(v, h, core);
@@ -212,9 +215,9 @@ if (window.gsap && window.ScrollTrigger) {
     .to(".chakra-legend", { opacity: 0, duration: 0.5 }, 6.2)
 
     /* the dive — origin locked on the third eye */
-    .to(".meditator", {
+    .to("#modelBox", {
       scale: 38,
-      transformOrigin: "50% 18.6%",
+      transformOrigin: "50% 12.5%",
       ease: "power2.in",
       duration: 4.4,
     }, 6.4)
@@ -236,7 +239,7 @@ if (window.gsap && window.ScrollTrigger) {
   /* intro: headline rises on load */
   gsap.from(".hero__title span", { y: 90, opacity: 0, stagger: 0.15, duration: 1.3, ease: "power3.out", delay: 0.3 });
   gsap.from(".hero__kicker", { opacity: 0, y: 24, duration: 1.1, delay: 1 });
-  gsap.from(".meditator", { scale: 0.9, opacity: 0, duration: 1.6, ease: "power3.out", delay: 0.2 });
+  gsap.from("#modelBox", { scale: 0.9, opacity: 0, duration: 1.6, ease: "power3.out", delay: 0.2 });
 
   /* —— generic reveals —— */
   gsap.utils.toArray(".reveal").forEach((el) => {
