@@ -7,7 +7,7 @@
 <meta name="description" content="INNERLIGHT — meditation & healing of the soul, woven from cosmic energy. Enter the mind. Absorb the light." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Jost:wght@200;300;400;500&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🔮</text></svg>" />
 </head>
@@ -15,6 +15,11 @@
 
 <!-- ambient particle canvas -->
 <canvas id="stars"></canvas>
+
+<!-- film grain + custom cursor -->
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
 <!-- progress bar -->
 <div class="progress"><span id="progressBar"></span></div>
@@ -102,68 +107,57 @@
             <radialGradient id="haloCrown" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#c77dff"/><stop offset="100%" stop-color="#c77dff" stop-opacity="0"/></radialGradient>
           </defs>
 
-          <!-- kundalini beam drawn up the spine -->
-          <line class="spine" x1="561" y1="950" x2="561" y2="20"
+          <!-- kundalini beam drawn up the spine (x=566 = measured centerline) -->
+          <line class="spine" x1="566" y1="990" x2="566" y2="20"
             stroke="url(#spineGrad)" stroke-width="6" filter="url(#glowS)"
             pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity=".9"/>
 
-          <!-- the 7 chakras, root → crown (ignition order) -->
-          <g class="chakra" data-name="root" transform="translate(561,950)">
-            <circle class="ch-halo" r="56" fill="url(#haloRoot)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#ff5757" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#ff5757" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <!-- the 7 chakras on the measured spine, root → crown (ignition order) -->
+          <g class="chakra" data-name="root" transform="translate(566,990)">
+            <circle class="ch-halo" r="68" fill="url(#haloRoot)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#ff5757" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#ff5757" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
-          <g class="chakra" data-name="sacral" transform="translate(561,790)">
-            <circle class="ch-halo" r="56" fill="url(#haloSacral)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#ff9f43" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#ff9f43" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <g class="chakra" data-name="sacral" transform="translate(566,830)">
+            <circle class="ch-halo" r="68" fill="url(#haloSacral)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#ff9f43" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#ff9f43" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
-          <g class="chakra" data-name="solar" transform="translate(561,630)">
-            <circle class="ch-halo" r="56" fill="url(#haloSolar)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#ffd93d" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#ffd93d" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <g class="chakra" data-name="solar" transform="translate(566,680)">
+            <circle class="ch-halo" r="68" fill="url(#haloSolar)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#ffd93d" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#ffd93d" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
-          <g class="chakra" data-name="heart" transform="translate(561,480)">
-            <circle class="ch-halo" r="56" fill="url(#haloHeart)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#4cd984" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#4cd984" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <g class="chakra" data-name="heart" transform="translate(566,520)">
+            <circle class="ch-halo" r="68" fill="url(#haloHeart)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#4cd984" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#4cd984" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
-          <g class="chakra" data-name="throat" transform="translate(561,330)">
-            <circle class="ch-halo" r="56" fill="url(#haloThroat)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#4cc3ff" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#4cc3ff" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <g class="chakra" data-name="throat" transform="translate(566,350)">
+            <circle class="ch-halo" r="68" fill="url(#haloThroat)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#4cc3ff" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#4cc3ff" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
-          <g class="chakra" data-name="thirdeye" transform="translate(561,175)">
-            <circle class="ch-halo" r="56" fill="url(#haloEye)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#6a5cff" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#6a5cff" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <g class="chakra" data-name="thirdeye" transform="translate(566,170)">
+            <circle class="ch-halo" r="68" fill="url(#haloEye)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#6a5cff" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#6a5cff" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
-          <g class="chakra" data-name="crown" transform="translate(561,20)">
-            <circle class="ch-halo" r="56" fill="url(#haloCrown)"/>
-            <circle class="ch-petal" r="40" fill="none" stroke="#c77dff" stroke-width="3" stroke-dasharray="8 12"/>
-            <circle class="ch-ring" r="28" fill="rgba(4,0,16,.55)" stroke="#c77dff" stroke-width="5"/>
-            <circle class="ch-core" r="10" fill="#fff"/>
+          <g class="chakra" data-name="crown" transform="translate(566,20)">
+            <circle class="ch-halo" r="68" fill="url(#haloCrown)"/>
+            <circle class="ch-petal" r="48" fill="none" stroke="#c77dff" stroke-width="3" stroke-dasharray="9 13"/>
+            <circle class="ch-ring" r="34" fill="rgba(4,0,16,.55)" stroke="#c77dff" stroke-width="5.5"/>
+            <circle class="ch-core" r="12" fill="#fff"/>
           </g>
         </svg>
       </div>
     </div>
-
-    <!-- chakra names in Sanskrit, kept off the body -->
-    <aside class="chakra-legend" id="chakraLegend" aria-hidden="true">
-      <div class="leg" data-chakra="crown"><span class="leg__sa">सहस्रार</span><span class="leg__en">SAHASRARA · CROWN</span></div>
-      <div class="leg" data-chakra="thirdeye"><span class="leg__sa">आज्ञा</span><span class="leg__en">AJNA · THIRD EYE</span></div>
-      <div class="leg" data-chakra="throat"><span class="leg__sa">विशुद्ध</span><span class="leg__en">VISHUDDHA · THROAT</span></div>
-      <div class="leg" data-chakra="heart"><span class="leg__sa">अनाहत</span><span class="leg__en">ANAHATA · HEART</span></div>
-      <div class="leg" data-chakra="solar"><span class="leg__sa">मणिपुर</span><span class="leg__en">MANIPURA · SOLAR PLEXUS</span></div>
-      <div class="leg" data-chakra="sacral"><span class="leg__sa">स्वाधिष्ठान</span><span class="leg__en">SVADHISHTHANA · SACRAL</span></div>
-      <div class="leg" data-chakra="root"><span class="leg__sa">मूलाधार</span><span class="leg__en">MULADHARA · ROOT</span></div>
-    </aside>
 
     <!-- the light that swallows the screen, then turns to a new reality -->
     <div class="hero__portal" id="heroPortal"></div>
@@ -492,6 +486,7 @@
 
 <!-- ════════ FOOTER ════════ -->
 <footer class="footer">
+  <p class="footer__big" aria-hidden="true">INNERLIGHT</p>
   <div class="wrap footer__grid">
     <div>
       <a class="nav__logo" href="#top">INNERLIGHT<sup>®</sup></a>

@@ -111,6 +111,54 @@
   }
 })();
 
+/* ---------- awwwards layer : cursor, magnetic buttons, tilt ---------- */
+(function fancyPointer() {
+  if (!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+
+  /* custom cursor: dot snaps, ring lerps behind */
+  const ring = document.getElementById("cursor");
+  const dot = document.getElementById("cursorDot");
+  let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+  addEventListener("mousemove", (e) => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + "px"; dot.style.top = my + "px";
+  }, { passive: true });
+  (function follow() {
+    rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+    ring.style.left = rx + "px"; ring.style.top = ry + "px";
+    requestAnimationFrame(follow);
+  })();
+  const hoverables = "a, button, .btn, .card, .exp__visual, .testimonial, .retreat__video";
+  document.querySelectorAll(hoverables).forEach((el) => {
+    el.addEventListener("mouseenter", () => ring.classList.add("is-hover"));
+    el.addEventListener("mouseleave", () => ring.classList.remove("is-hover"));
+  });
+
+  /* magnetic buttons: drift toward the cursor */
+  document.querySelectorAll(".btn, .nav__cta").forEach((el) => {
+    el.style.transition = "transform .35s cubic-bezier(.22,1,.36,1)";
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.3}px)`;
+    });
+    el.addEventListener("mouseleave", () => { el.style.transform = ""; });
+  });
+
+  /* 3D tilt on visual panels */
+  document.querySelectorAll(".exp__visual, .coach__frame, .retreat__video").forEach((el) => {
+    el.style.transformStyle = "preserve-3d";
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(900px) rotateY(${px * 10}deg) rotateX(${py * -10}deg)`;
+    });
+    el.addEventListener("mouseleave", () => { el.style.transform = ""; });
+  });
+})();
+
 /* ---------- nav + progress bar ---------- */
 const nav = document.getElementById("nav");
 const progressBar = document.getElementById("progressBar");
@@ -207,9 +255,8 @@ if (window.gsap && window.ScrollTrigger) {
     .to(".hero__kicker, #scrollHint", { opacity: 0, duration: 0.6 }, 0)
     .to(".streak", { opacity: 0.25, duration: 1.4 }, 0.4);
 
-  /* chakra ignition, root → crown; the Sanskrit legend lights up in step */
+  /* chakra ignition, root → crown */
   const chakras = gsap.utils.toArray(".chakra"); // markup order = ignition order
-  const legs = gsap.utils.toArray(".chakra-legend .leg"); // crown first in DOM
   chakras.forEach((ch, i) => {
     const t = 0.7 + i * 0.55;
     dive
@@ -217,8 +264,6 @@ if (window.gsap && window.ScrollTrigger) {
       .to(ch.querySelector(".ch-ring"), { opacity: 1, duration: 0.35 }, t)
       .to(ch.querySelector(".ch-core"), { opacity: 1, duration: 0.35 }, t)
       .to(ch.querySelector(".ch-petal"), { opacity: 0.9, duration: 0.4 }, t + 0.08);
-    const leg = legs[legs.length - 1 - i];
-    if (leg) dive.to(leg, { opacity: 1, x: -8, duration: 0.35 }, t + 0.1);
   });
 
   dive
@@ -231,12 +276,11 @@ if (window.gsap && window.ScrollTrigger) {
     .to(".mountains", { opacity: 0, yPercent: 20, duration: 1.2 }, 5.4)
     .to(".tunnel span", { opacity: 1, scale: 1, stagger: 0.16, ease: "power1.out", duration: 1.5 }, 5.6)
     .to("#headGlow", { opacity: 1, scale: 1.25, duration: 1.8 }, 5.8)
-    .to(".chakra-legend", { opacity: 0, duration: 0.5 }, 6.2)
 
-    /* the dive — origin locked on the third eye */
+    /* the dive — origin locked on the measured third eye (566,170 of 1122x1402) */
     .to("#modelBox", {
       scale: 38,
-      transformOrigin: "50% 12.5%",
+      transformOrigin: "50.45% 12.13%",
       ease: "power2.in",
       duration: 4.4,
     }, 6.4)

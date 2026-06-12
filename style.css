@@ -143,7 +143,7 @@ body{
 /* tunnel of rings */
 .tunnel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .tunnel span{
-  position:absolute;left:50%;top:18%;
+  position:absolute;left:50%;top:23%;
   border-radius:50%;opacity:0;
   transform:translate(-50%,-50%) scale(.55);
   border:12px solid rgba(207,92,255,.55);
@@ -161,14 +161,14 @@ body{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 }
 .hero__glow{
-  position:absolute;left:50%;top:18%;transform:translate(-50%,-50%);
+  position:absolute;left:50%;top:23%;transform:translate(-50%,-50%);
   width:60vmin;height:60vmin;border-radius:50%;opacity:0;
   background:radial-gradient(circle, #ffffff 0%, #ffe9fb 30%, rgba(255,126,227,.6) 55%, transparent 75%);
   filter:blur(6px);
 }
 /* ── the model : real PNG cutout with the galaxy masked inside ── */
 .model{
-  position:relative;height:min(86vh,114vw);aspect-ratio:1122/1402;
+  position:relative;height:min(70vh,96vw);aspect-ratio:1122/1402;
   will-change:transform;
 }
 .model__img,.model__galaxy,.model__overlay,.model__stars,.model__neb{
@@ -200,36 +200,49 @@ body{
 }
 @keyframes petalSpin{to{transform:rotate(360deg)}}
 
-/* ── Sanskrit legend : names live beside the figure, never on it ── */
-.chakra-legend{
-  position:absolute;right:3.5vw;top:50%;transform:translateY(-50%);
-  z-index:5;display:flex;flex-direction:column;gap:1.05rem;
-  text-align:right;pointer-events:none;
+/* ── awwwards layer : grain, cursor, scrollbar ── */
+.grain{
+  position:fixed;inset:-50%;width:200%;height:200%;
+  pointer-events:none;z-index:200;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grainShift 8s steps(10) infinite;
 }
-.leg{opacity:.18}
-.leg__sa{
-  display:block;
-  font-family:"Tiro Devanagari Sanskrit", serif;
-  font-size:clamp(1.3rem,2.2vw,1.9rem);line-height:1.25;
+@keyframes grainShift{
+  0%,100%{transform:translate(0,0)}10%{transform:translate(-3%,2%)}
+  20%{transform:translate(2%,-3%)}30%{transform:translate(-2%,-2%)}
+  40%{transform:translate(3%,2%)}50%{transform:translate(-3%,-1%)}
+  60%{transform:translate(2%,3%)}70%{transform:translate(-1%,2%)}
+  80%{transform:translate(3%,-2%)}90%{transform:translate(-2%,1%)}
 }
-.leg__en{
-  display:block;font-family:var(--mono);
-  font-size:.56rem;letter-spacing:.24em;color:var(--ink-dim);
-  margin-top:.1rem;
+.cursor,.cursor-dot{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:300;
+  border-radius:50%;transform:translate(-50%,-50%);
+  display:none;
 }
-.leg[data-chakra="crown"]    .leg__sa{color:#c77dff;text-shadow:0 0 18px #c77dff}
-.leg[data-chakra="thirdeye"] .leg__sa{color:#8c7dff;text-shadow:0 0 18px #6a5cff}
-.leg[data-chakra="throat"]   .leg__sa{color:#4cc3ff;text-shadow:0 0 18px #4cc3ff}
-.leg[data-chakra="heart"]    .leg__sa{color:#4cd984;text-shadow:0 0 18px #4cd984}
-.leg[data-chakra="solar"]    .leg__sa{color:#ffd93d;text-shadow:0 0 18px #ffd93d}
-.leg[data-chakra="sacral"]   .leg__sa{color:#ff9f43;text-shadow:0 0 18px #ff9f43}
-.leg[data-chakra="root"]     .leg__sa{color:#ff5757;text-shadow:0 0 18px #ff5757}
-@media (max-width:900px){.chakra-legend{display:none}}
+.cursor{
+  width:42px;height:42px;border:1.5px solid rgba(255,126,227,.8);
+  transition:width .3s,height .3s,border-color .3s,background .3s;
+}
+.cursor.is-hover{
+  width:74px;height:74px;border-color:rgba(255,255,255,.9);
+  background:rgba(255,126,227,.12);
+}
+.cursor-dot{width:6px;height:6px;background:#ffd93d;box-shadow:0 0 10px #ffd93d}
+@media (hover:hover) and (pointer:fine){
+  .cursor,.cursor-dot{display:block}
+  body, a, button, .btn{cursor:none}
+}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:#0d0118}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(var(--pink),var(--violet),var(--orange));
+  border-radius:99px;
+}
 
 /* light portal → orange reality */
 .hero__portal{
   position:absolute;inset:0;opacity:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 18%, #ffffff 0%, #fff3e0 22%, var(--pink) 48%, var(--violet) 70%, var(--bg) 95%);
+  background:radial-gradient(circle at 50% 23%, #ffffff 0%, #fff3e0 22%, var(--pink) 48%, var(--violet) 70%, var(--bg) 95%);
 }
 .hero__reality{
   position:absolute;inset:0;opacity:0;pointer-events:none;
@@ -480,6 +493,12 @@ section{position:relative;z-index:2}
   border-top:1px solid rgba(228,79,212,.2);
   padding:5rem 0 2.4rem;position:relative;z-index:2;
   background:rgba(13,1,24,.85);
+}
+.footer__big{
+  font-family:var(--head);text-align:center;line-height:.95;
+  font-size:clamp(4rem,15vw,13rem);letter-spacing:.02em;
+  color:transparent;-webkit-text-stroke:1.5px rgba(255,126,227,.28);
+  margin-bottom:4rem;user-select:none;
 }
 .footer__grid{
   display:grid;gap:2.6rem;
