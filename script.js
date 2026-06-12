@@ -44,13 +44,26 @@
 
 /* ---------- sea of galaxy inside the figure's body ----------
    dense violet star-sea matched to the reference body texture:
-   purple, blue-white and pink stars over a Hubble deep field,
-   plus bright stars with diffraction spikes                     */
+   purple, blue-white and pink stars, faint distant-galaxy
+   smudges, plus bright stars with diffraction spikes            */
 (function galaxy() {
   const g = document.getElementById("galaxyStars");
   if (!g) return;
   const NS = "http://www.w3.org/2000/svg";
   const star = (tag) => document.createElementNS(NS, tag);
+
+  /* faint elliptical smudges — distant galaxies */
+  for (let i = 0; i < 26; i++) {
+    const e = star("ellipse");
+    e.setAttribute("cx", (40 + Math.random() * 1040).toFixed(1));
+    e.setAttribute("cy", (40 + Math.random() * 1320).toFixed(1));
+    e.setAttribute("rx", (5 + Math.random() * 16).toFixed(1));
+    e.setAttribute("ry", (3 + Math.random() * 7).toFixed(1));
+    e.setAttribute("transform", `rotate(${(Math.random() * 180).toFixed(0)} ${e.getAttribute("cx")} ${e.getAttribute("cy")})`);
+    e.setAttribute("fill", Math.random() < 0.5 ? "#cf9fff" : "#ffb8e8");
+    e.setAttribute("opacity", (Math.random() * 0.2 + 0.12).toFixed(2));
+    g.appendChild(e);
+  }
 
   for (let i = 0; i < 460; i++) {
     const s = star("circle");

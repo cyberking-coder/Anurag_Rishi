@@ -171,21 +171,21 @@ body{
   position:relative;height:min(86vh,114vw);aspect-ratio:1122/1402;
   will-change:transform;
 }
-.model__img,.model__galaxy,.model__overlay,.model__field,.model__stars,.model__neb{
+.model__img,.model__galaxy,.model__overlay,.model__stars,.model__neb{
   position:absolute;inset:0;width:100%;height:100%;
 }
-.model__img{object-fit:fill;filter:drop-shadow(0 0 18px rgba(255,255,255,.35))}
+.model__img{object-fit:fill;filter:drop-shadow(0 0 10px rgba(255,255,255,.22))}
 .model__galaxy{
   -webkit-mask-image:url(model.png);mask-image:url(model.png);
   -webkit-mask-size:100% 100%;mask-size:100% 100%;
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   mix-blend-mode:screen;
 }
-.model__field{object-fit:cover;opacity:.6}
 .model__neb{background:
-  radial-gradient(ellipse 60% 45% at 40% 45%, rgba(123,47,190,.6), transparent 70%),
-  radial-gradient(ellipse 55% 40% at 64% 70%, rgba(228,79,212,.42), transparent 70%),
-  radial-gradient(ellipse 45% 35% at 50% 16%, rgba(76,195,255,.35), transparent 70%)}
+  radial-gradient(ellipse 55% 42% at 40% 45%, rgba(123,47,190,.5), transparent 70%),
+  radial-gradient(ellipse 50% 38% at 64% 70%, rgba(228,79,212,.35), transparent 70%),
+  radial-gradient(ellipse 42% 32% at 50% 16%, rgba(76,140,255,.3), transparent 70%),
+  radial-gradient(ellipse 70% 26% at 50% 58%, rgba(207,159,255,.22), transparent 75%)}
 .model__overlay{overflow:visible}
 .bodyStar{animation:starTwinkle 3.6s ease-in-out infinite}
 @keyframes starTwinkle{0%,100%{opacity:1}50%{opacity:.2}}
