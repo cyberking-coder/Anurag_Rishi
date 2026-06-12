@@ -158,19 +158,25 @@ addEventListener("scroll", () => {
   })();
 })();
 
-/* ---------- counters ---------- */
+/* ---------- counters (supports data-decimals + data-suffix, e.g. 2.5M+) ---------- */
+function runCounter(el) {
+  const target = +el.dataset.count;
+  const decimals = +(el.dataset.decimals || 0);
+  const suffix = el.dataset.suffix || "";
+  const t0 = performance.now();
+  const dur = 1800;
+  (function step(t) {
+    const k = Math.min(1, (t - t0) / dur);
+    const eased = 1 - Math.pow(1 - k, 3);
+    const val = target * eased;
+    el.textContent = (decimals
+      ? val.toFixed(decimals)
+      : Math.round(val).toLocaleString()) + suffix;
+    if (k < 1) requestAnimationFrame(step);
+  })(t0);
+}
 function animateCounters() {
-  document.querySelectorAll("[data-count]").forEach((el) => {
-    const target = +el.dataset.count;
-    const t0 = performance.now();
-    const dur = 1800;
-    (function step(t) {
-      const k = Math.min(1, (t - t0) / dur);
-      const eased = 1 - Math.pow(1 - k, 3);
-      el.textContent = Math.round(target * eased).toLocaleString();
-      if (k < 1) requestAnimationFrame(step);
-    })(t0);
-  });
+  document.querySelectorAll("[data-count]").forEach(runCounter);
 }
 
 /* ═════════ GSAP scroll choreography ═════════ */
@@ -262,12 +268,44 @@ if (window.gsap && window.ScrollTrigger) {
     });
   });
 
-  /* counters fire once when stats enter */
-  ScrollTrigger.create({
-    trigger: ".stats",
-    start: "top 85%",
-    once: true,
-    onEnter: animateCounters,
+  /* each counter fires once as it scrolls into view */
+  gsap.utils.toArray("[data-count]").forEach((el) => {
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 88%",
+      once: true,
+      onEnter: () => runCounter(el),
+    });
+  });
+
+  /* retreat experience rows slide in from their side */
+  gsap.utils.toArray(".slide-l").forEach((el) => {
+    gsap.from(el, {
+      x: -70, opacity: 0, duration: 1.1, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 84%" },
+    });
+  });
+  gsap.utils.toArray(".slide-r").forEach((el) => {
+    gsap.from(el, {
+      x: 70, opacity: 0, duration: 1.1, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 84%" },
+    });
+  });
+
+  /* checklist ticks pop in one by one */
+  gsap.utils.toArray(".ticks").forEach((list) => {
+    gsap.from(list.children, {
+      x: -24, opacity: 0, stagger: 0.12, duration: 0.6, ease: "power2.out",
+      scrollTrigger: { trigger: list, start: "top 88%" },
+    });
+  });
+
+  /* the ✕ / ✓ walls cascade in */
+  gsap.utils.toArray(".xlist, .ylist").forEach((list) => {
+    gsap.from(list.children, {
+      y: 36, opacity: 0, stagger: 0.07, duration: 0.7, ease: "power2.out",
+      scrollTrigger: { trigger: list, start: "top 85%" },
+    });
   });
 
   /* quote band drifts sideways with scroll */
