@@ -589,9 +589,137 @@ section{position:relative;z-index:2}
   position:relative;aspect-ratio:4/3;border-radius:22px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   border:1px solid rgba(228,79,212,.25);
+  --bcycle:8s;--fglow:rgba(255,126,227,.55);
 }
-.exp__visual span{font-size:clamp(4rem,8vw,7rem);filter:drop-shadow(0 0 30px rgba(255,255,255,.45));animation:floatY 5s ease-in-out infinite}
-@keyframes floatY{0%,100%{transform:translateY(-8px)}50%{transform:translateY(10px)}}
+
+/* ── the living kriya scene : meditating model that breathes ── */
+.kriya{
+  position:relative;width:100%;height:100%;
+  display:flex;align-items:flex-end;justify-content:center;
+  transform:translateZ(46px);
+}
+.kriya__fig{
+  position:relative;z-index:2;height:84%;width:auto;margin-bottom:2%;
+  transform-origin:50% 100%;
+  animation:kriyaBreath var(--bcycle) ease-in-out infinite;
+  filter:drop-shadow(0 0 26px var(--fglow));
+}
+@keyframes kriyaBreath{
+  0%,100%{transform:scale(.965)}
+  42%,55%{transform:scale(1.045)}
+}
+.kriya__fig--float{animation-name:kriyaFloat}
+@keyframes kriyaFloat{
+  0%,100%{transform:scale(.965) translateY(0)}
+  42%,55%{transform:scale(1.045) translateY(-22px)}
+}
+.kriya__breath{
+  position:absolute;z-index:3;bottom:1rem;left:0;right:0;height:1.1rem;
+  text-align:center;font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.34em;color:rgba(255,255,255,.85);
+}
+.kriya__breath b{
+  position:absolute;left:0;right:0;font-weight:400;opacity:0;
+  animation:breathTxtA var(--bcycle) ease-in-out infinite;
+}
+.kriya__breath b:last-child{animation-name:breathTxtB}
+@keyframes breathTxtA{0%,8%{opacity:0}18%,42%{opacity:1}52%,100%{opacity:0}}
+@keyframes breathTxtB{0%,52%{opacity:0}62%,90%{opacity:1}100%{opacity:0}}
+
+/* fx: rhythmic rings (magenta) */
+.exp__visual[data-hue="magenta"]{--fglow:rgba(255,126,227,.6)}
+.exp__visual[data-hue="magenta"] .fx{
+  position:absolute;left:50%;top:52%;width:48%;aspect-ratio:1;border-radius:50%;
+  border:2px solid rgba(255,126,227,.55);
+  animation:fxRing 4s ease-out infinite;
+}
+.exp__visual[data-hue="magenta"] .fx2{animation-delay:1.33s}
+.exp__visual[data-hue="magenta"] .fx3{animation-delay:2.66s}
+@keyframes fxRing{
+  0%{transform:translate(-50%,-50%) scale(.35);opacity:.9}
+  100%{transform:translate(-50%,-50%) scale(1.75);opacity:0}
+}
+
+/* fx: rising embers (orange · catharsis) */
+.exp__visual[data-hue="orange"]{--fglow:rgba(255,159,67,.6)}
+.exp__visual[data-hue="orange"] .fx{
+  position:absolute;bottom:14%;width:9px;height:9px;border-radius:50%;
+  background:#ffb061;box-shadow:0 0 12px #ff8c1f;
+  animation:fxEmber 3.6s ease-in infinite;opacity:0;
+}
+.exp__visual[data-hue="orange"] .fx1{left:30%}
+.exp__visual[data-hue="orange"] .fx2{left:46%;animation-delay:.9s}
+.exp__visual[data-hue="orange"] .fx3{left:60%;animation-delay:1.8s}
+.exp__visual[data-hue="orange"] .fx4{left:72%;animation-delay:2.7s;width:6px;height:6px}
+@keyframes fxEmber{
+  0%{transform:translate(0,0);opacity:0}
+  12%{opacity:1}
+  100%{transform:translate(18px,-240px);opacity:0}
+}
+
+/* fx: moonlit sleep (indigo · yog nidra) — slow, deep breath */
+.exp__visual[data-hue="indigo"]{--bcycle:12s;--fglow:rgba(140,125,255,.6)}
+.exp__visual[data-hue="indigo"] .fx1{
+  position:absolute;top:12%;right:14%;width:54px;height:54px;border-radius:50%;
+  background:transparent;box-shadow:-14px 10px 0 6px #cfd6ff;
+  filter:drop-shadow(0 0 18px rgba(180,190,255,.8));
+  transform:rotate(-18deg);
+}
+.exp__visual[data-hue="indigo"] .fx2,
+.exp__visual[data-hue="indigo"] .fx3{
+  position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;
+  animation:starTwinkle 3.6s ease-in-out infinite;
+}
+.exp__visual[data-hue="indigo"] .fx2{top:24%;left:20%}
+.exp__visual[data-hue="indigo"] .fx3{top:40%;right:26%;animation-delay:-1.8s}
+
+/* fx: tap pulses (teal · body tapping) */
+.exp__visual[data-hue="teal"]{--fglow:rgba(110,240,205,.55)}
+.exp__visual[data-hue="teal"] .fx{
+  position:absolute;width:16px;height:16px;border-radius:50%;
+  border:2px solid #6ff0cf;box-shadow:0 0 14px rgba(110,240,205,.7);
+  animation:fxTap 2.6s ease-out infinite;opacity:0;
+}
+.exp__visual[data-hue="teal"] .fx1{left:41%;top:44%}
+.exp__visual[data-hue="teal"] .fx2{left:56%;top:56%;animation-delay:.85s}
+.exp__visual[data-hue="teal"] .fx3{left:47%;top:70%;animation-delay:1.7s}
+@keyframes fxTap{
+  0%{transform:scale(.3);opacity:0}
+  12%{transform:scale(1);opacity:1}
+  45%{transform:scale(1.8);opacity:0}
+  100%{opacity:0}
+}
+
+/* fx: seven glowing centres (rainbow · chakra balancing) */
+.exp__visual[data-hue="rainbow"]{--fglow:rgba(199,125,255,.6)}
+.exp__visual[data-hue="rainbow"] .fxdots{
+  position:absolute;z-index:3;left:50%;top:17%;width:13px;height:13px;border-radius:50%;
+  transform:translateX(-50%);background:#c77dff;
+  box-shadow:
+    0 27px 0 -1px #6a5cff,
+    0 54px 0 -1px #4cc3ff,
+    0 81px 0 -1px #4cd984,
+    0 108px 0 -1px #ffd93d,
+    0 135px 0 -1px #ff9f43,
+    0 162px 0 -1px #ff5757;
+  animation:fxDots 3.2s ease-in-out infinite;
+}
+@keyframes fxDots{
+  0%,100%{filter:drop-shadow(0 0 6px rgba(255,255,255,.9)) brightness(1)}
+  50%{filter:drop-shadow(0 0 16px rgba(255,255,255,1)) brightness(1.5)}
+}
+
+/* fx: liberation rays (violet) — figure levitates */
+.exp__visual[data-hue="violet"]{--fglow:rgba(199,125,255,.65)}
+.exp__visual[data-hue="violet"] .fxrays{
+  position:absolute;left:50%;top:50%;width:160%;aspect-ratio:1;border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(transparent 0 11deg, rgba(199,125,255,.13) 11deg 15deg);
+  -webkit-mask-image:radial-gradient(circle, #000 30%, transparent 68%);
+  mask-image:radial-gradient(circle, #000 30%, transparent 68%);
+  animation:fxSpin 36s linear infinite;
+}
+@keyframes fxSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 .exp__visual[data-hue="magenta"]{background:radial-gradient(ellipse at 50% 80%, rgba(228,79,212,.5), transparent 70%),linear-gradient(160deg,#2a0845,#0d0118)}
 .exp__visual[data-hue="orange"]{background:radial-gradient(ellipse at 50% 80%, rgba(255,140,31,.45), transparent 70%),linear-gradient(160deg,#3c1430,#0d0118)}
 .exp__visual[data-hue="indigo"]{background:radial-gradient(ellipse at 50% 80%, rgba(106,92,255,.5), transparent 70%),linear-gradient(160deg,#150a4a,#0d0118)}
