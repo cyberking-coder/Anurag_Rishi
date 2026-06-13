@@ -598,21 +598,32 @@ section{position:relative;z-index:2}
   display:flex;align-items:flex-end;justify-content:center;
   transform:translateZ(46px);
 }
-.kriya__fig{
-  position:relative;z-index:2;height:84%;width:auto;margin-bottom:2%;
-  transform-origin:50% 100%;
+.kriya{align-items:center}
+.kriya__core{
+  position:relative;z-index:2;width:54%;max-width:230px;aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  transform-origin:50% 50%;
   animation:kriyaBreath var(--bcycle) ease-in-out infinite;
   filter:drop-shadow(0 0 26px var(--fglow));
 }
+.kriya__svg{width:100%;height:100%;overflow:visible}
 @keyframes kriyaBreath{
-  0%,100%{transform:scale(.965)}
-  42%,55%{transform:scale(1.045)}
+  0%,100%{transform:scale(.9)}
+  42%,55%{transform:scale(1.08)}
 }
-.kriya__fig--float{animation-name:kriyaFloat}
+.kriya__core--float{animation-name:kriyaFloat}
 @keyframes kriyaFloat{
-  0%,100%{transform:scale(.965) translateY(0)}
-  42%,55%{transform:scale(1.045) translateY(-22px)}
+  0%,100%{transform:scale(.9) translateY(10px)}
+  42%,55%{transform:scale(1.08) translateY(-18px)}
 }
+.kriya__core--flame{animation-name:kriyaFlame}
+@keyframes kriyaFlame{
+  0%,100%{transform:scale(.92) skewX(2deg)}
+  30%{transform:scale(1.06) skewX(-3deg)}
+  60%{transform:scale(1.0) skewX(2deg)}
+}
+.spin-slow{animation:coreSpin 26s linear infinite}
+@keyframes coreSpin{to{transform:rotate(360deg)}}
 .kriya__breath{
   position:absolute;z-index:3;bottom:1rem;left:0;right:0;height:1.1rem;
   text-align:center;font-family:var(--mono);font-size:.6rem;
